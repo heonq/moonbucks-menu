@@ -35,6 +35,14 @@ class App {
       </li>`;
   }
 
+  handleCategory(e) {
+    if (e.target.classList.contains("cafe-category-name"))
+      this.category = e.target.dataset.categoryName;
+    $(".mt-1").innerText = `${e.target.innerText} 메뉴 관리`;
+
+    this.updateMenu();
+  }
+
   handleInput() {
     const menuName = menuInput.value;
     if (menuName === "") return;
@@ -92,6 +100,7 @@ class App {
         this.handleDelete(e);
       if (e.target.classList.contains("menu-edit-button")) this.handleEdit(e);
     });
+    $("nav").addEventListener("click", (e) => this.handleCategory(e));
   }
 }
 
