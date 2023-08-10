@@ -55,7 +55,6 @@ class App {
   handleDelete(e) {
     if (confirm("메뉴를 삭제하시겠습니까?")) {
       const index = e.target.closest("li").dataset.menuIndex;
-      console.log(index);
       this.menu[this.category].splice(index, 1);
       localStorage.setItem("menu", JSON.stringify(this.menu));
     }
