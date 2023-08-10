@@ -107,7 +107,7 @@ class App {
     );
     $("#espresso-menu-submit-button").addEventListener(
       "click",
-      this.handleInput.bind(this)
+      this.handleInput
     );
     menuInput.addEventListener("keypress", (e) => {
       if (e.key !== "Enter") return;
