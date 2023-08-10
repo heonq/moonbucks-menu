@@ -8,29 +8,29 @@ export const InputView = {
       e.preventDefault()
     );
   },
-  handleSubmit(model) {
+  handleSubmit(menu) {
     $("#espresso-menu-submit-button").addEventListener("click", () => {
-      model.handleInput();
+      menu.handleInput();
       OutputView.updateMenu();
     });
   },
-  handleKeypress(model) {
+  handleKeypress(menu) {
     menuInput.addEventListener("keypress", (e) => {
       if (e.key !== "Enter") return;
-      model.handleInput();
+      menu.handleInput();
       OutputView.updateMenu();
     });
   },
-  handleMenuButton(model) {
+  handleMenuButton(menu) {
     menuList.addEventListener("click", (e) => {
       if (e.target.classList.contains("menu-remove-button"))
-        model.handleDelete(e);
-      if (e.target.classList.contains("menu-edit-button")) model.handleEdit(e);
+        menu.handleDelete(e);
+      if (e.target.classList.contains("menu-edit-button")) menu.handleEdit(e);
       if (e.target.classList.contains("menu-sold-out-button"))
-        model.handleSoldOut(e);
+        menu.handleSoldOut(e);
     });
   },
-  handleCategory(model) {
-    $("nav").addEventListener("click", (e) => model.handleCategory(e));
+  handleCategory(menu) {
+    $("nav").addEventListener("click", (e) => menu.handleCategory(e));
   },
 };
