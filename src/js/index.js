@@ -28,6 +28,7 @@ class App {
       this.menuItemTemplate(menuName)
     );
   }
+
   init() {
     $("#espresso-menu-form").addEventListener("submit", (e) =>
       e.preventDefault()
@@ -36,6 +37,10 @@ class App {
       "click",
       this.handleInput.bind(this)
     );
+    menuInput.addEventListener("keypress", (e) => {
+      if (e.key !== "Enter") return;
+      this.handleInput().bind(this);
+    });
   }
 }
 
