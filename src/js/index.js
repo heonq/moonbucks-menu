@@ -17,9 +17,17 @@ class App {
     this.category = "espresso";
   }
 
-  menuItemTemplate(menuName, index) {
+  menuItemTemplate(menuName, index, soldOut) {
     return `<li data-menu-index=${index} class="menu-list-item d-flex items-center py-2">
-        <span class="w-100 pl-2 menu-name">${menuName}</span>
+        <span class=  "${
+          soldOut ? "sold-out" : ""
+        } w-100 pl-2 menu-name">${menuName}</span>
+        <button
+        type="button"
+        class="bg-gray-50 text-gray-500 text-sm mr-1 menu-sold-out-button"
+      >
+        품절
+      </button>
         <button
           type="button"
           class="bg-gray-50 text-gray-500 text-sm mr-1 menu-edit-button"
@@ -55,7 +63,9 @@ class App {
   updateMenu() {
     this.menu = JSON.parse(localStorage.getItem("menu"));
     menuList.innerHTML = this.menu[this.category]
-      .map(({ name }, index) => this.menuItemTemplate(name, index))
+      .map(({ name, soldOut }, index) =>
+        this.menuItemTemplate(name, index, soldOut)
+      )
       .join("");
     this.updateCount();
   }
@@ -66,6 +76,14 @@ class App {
       this.menu[this.category].splice(index, 1);
       localStorage.setItem("menu", JSON.stringify(this.menu));
     }
+    this.updateMenu();
+  }
+
+  handleSoldOut(e) {
+    const index = e.target.closest("li").dataset.menuIndex;
+    this.menu[this.category][index].soldOut =
+      !this.menu[this.category][index].soldOut;
+    localStorage.setItem("menu", JSON.stringify(this.menu));
     this.updateMenu();
   }
 
@@ -99,6 +117,8 @@ class App {
       if (e.target.classList.contains("menu-remove-button"))
         this.handleDelete(e);
       if (e.target.classList.contains("menu-edit-button")) this.handleEdit(e);
+      if (e.target.classList.contains("menu-sold-out-button"))
+        this.handleSoldOut(e);
     });
     $("nav").addEventListener("click", (e) => this.handleCategory(e));
   }
