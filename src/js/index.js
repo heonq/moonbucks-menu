@@ -1,7 +1,22 @@
 import $ from "../../utils/index.js";
 const menuInput = $("#espresso-menu-name");
+const menuList = $("#espresso-menu-list");
 
 class App {
+  menu;
+  category;
+
+  constructor() {
+    this.menu = {
+      espresso: [],
+      frappuccino: [],
+      blended: [],
+      teavana: [],
+      desert: [],
+    };
+    this.category = espresso;
+  }
+
   menuItemTemplate(menuName) {
     return `<li class="menu-list-item d-flex items-center py-2">
         <span class="w-100 pl-2 menu-name">${menuName}</span>
@@ -23,10 +38,8 @@ class App {
   handleInput() {
     const menuName = menuInput.value;
     if (menuName === "") return;
-    $("#espresso-menu-list").insertAdjacentHTML(
-      "beforeend",
-      this.menuItemTemplate(menuName)
-    );
+    this.menu[this.category].push({ name: menuName });
+    localStorage.setItem("menu", JSON.stringify(this.menu));
     menuInput.value = "";
     this.updateCount();
   }
@@ -44,9 +57,7 @@ class App {
   }
 
   updateCount() {
-    const menuCount = $("#espresso-menu-list").querySelectorAll(
-      ".menu-list-item"
-    ).length;
+    const menuCount = menuList.querySelectorAll(".menu-list-item").length;
     $(".menu-count").innerText = `총 ${menuCount}개`;
   }
 
@@ -62,7 +73,7 @@ class App {
       if (e.key !== "Enter") return;
       this.handleInput().bind(this);
     });
-    $("#espresso-menu-list").addEventListener("click", (e) => {
+    menuList.addEventListener("click", (e) => {
       if (e.target.classList.contains("menu-remove-button"))
         this.handleDelete(e).bind(this);
       if (e.target.classList.contains("menu-edit-button"))
