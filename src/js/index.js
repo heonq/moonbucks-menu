@@ -63,7 +63,10 @@ class App {
 
   handleEdit(e) {
     const newName = prompt("수정할 이름을 입력해주세요.");
-    e.target.closest("li").querySelector("span").innerText = newName;
+    const index = e.target.closest("li").dataset.menuIndex;
+    this.menu[this.category][index].name = newName;
+    localStorage.setItem("menu", JSON.stringify(this.menu));
+    this.updateMenu();
   }
 
   updateCount() {
