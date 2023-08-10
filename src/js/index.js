@@ -38,6 +38,11 @@ class App {
     this.updateCount();
   }
 
+  handleEdit(e) {
+    const newName = prompt("수정할 이름을 입력해주세요.");
+    e.target.closest("li").querySelector("span").innerText = newName;
+  }
+
   updateCount() {
     const menuCount = $("#espresso-menu-list").querySelectorAll(
       ".menu-list-item"
@@ -60,6 +65,8 @@ class App {
     $("#espresso-menu-list").addEventListener("click", (e) => {
       if (e.target.classList.contains("menu-remove-button"))
         this.handleDelete(e).bind(this);
+      if (e.target.classList.contains("menu-edit-button"))
+        this.handleEdit(e).bind(this);
     });
   }
 }
