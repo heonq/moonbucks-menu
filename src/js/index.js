@@ -31,6 +31,13 @@ class App {
     this.updateCount();
   }
 
+  handleDelete(e) {
+    if (confirm("메뉴를 삭제하시겠습니까?")) {
+      e.target.closest("li").remove();
+    }
+    this.updateCount();
+  }
+
   updateCount() {
     const menuCount = $("#espresso-menu-list").querySelectorAll(
       ".menu-list-item"
@@ -49,6 +56,10 @@ class App {
     menuInput.addEventListener("keypress", (e) => {
       if (e.key !== "Enter") return;
       this.handleInput().bind(this);
+    });
+    $("#espresso-menu-list").addEventListener("click", (e) => {
+      if (e.target.classList.contains("menu-remove-button"))
+        this.handleDelete(e).bind(this);
     });
   }
 }
