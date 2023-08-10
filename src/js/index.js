@@ -28,6 +28,14 @@ class App {
       this.menuItemTemplate(menuName)
     );
     menuInput.value = "";
+    this.updateCount();
+  }
+
+  updateCount() {
+    const menuCount = $("#espresso-menu-list").querySelectorAll(
+      ".menu-list-item"
+    ).length;
+    $(".menu-count").innerText = `총 ${menuCount}개`;
   }
 
   init() {
