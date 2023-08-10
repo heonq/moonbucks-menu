@@ -27,6 +27,7 @@ class App {
       "beforeend",
       this.menuItemTemplate(menuName)
     );
+    menuInput.value = "";
   }
 
   init() {
