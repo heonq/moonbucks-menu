@@ -1,6 +1,4 @@
 import $ from "../../utils/index.js";
-const menuInput = $("#espresso-menu-name");
-const menuList = $("#espresso-menu-list");
 
 class App {
   menu;
@@ -102,25 +100,6 @@ class App {
 
   init() {
     this.updateMenu();
-    $("#espresso-menu-form").addEventListener("submit", (e) =>
-      e.preventDefault()
-    );
-    $("#espresso-menu-submit-button").addEventListener(
-      "click",
-      this.handleInput
-    );
-    menuInput.addEventListener("keypress", (e) => {
-      if (e.key !== "Enter") return;
-      this.handleInput();
-    });
-    menuList.addEventListener("click", (e) => {
-      if (e.target.classList.contains("menu-remove-button"))
-        this.handleDelete(e);
-      if (e.target.classList.contains("menu-edit-button")) this.handleEdit(e);
-      if (e.target.classList.contains("menu-sold-out-button"))
-        this.handleSoldOut(e);
-    });
-    $("nav").addEventListener("click", (e) => this.handleCategory(e));
   }
 }
 
