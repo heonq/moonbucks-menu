@@ -17,8 +17,8 @@ class App {
     this.category = "espresso";
   }
 
-  menuItemTemplate(menuName) {
-    return `<li class="menu-list-item d-flex items-center py-2">
+  menuItemTemplate(menuName, index) {
+    return `<li data-menu-index=${index} class="menu-list-item d-flex items-center py-2">
         <span class="w-100 pl-2 menu-name">${menuName}</span>
         <button
           type="button"
@@ -47,16 +47,19 @@ class App {
   updateMenu() {
     this.menu = JSON.parse(localStorage.getItem("menu"));
     menuList.innerHTML = this.menu[this.category]
-      .map(({ name }) => this.menuItemTemplate(name))
+      .map(({ name }, index) => this.menuItemTemplate(name, index))
       .join("");
     this.updateCount();
   }
 
   handleDelete(e) {
     if (confirm("메뉴를 삭제하시겠습니까?")) {
-      e.target.closest("li").remove();
+      const index = e.target.closest("li").dataset.menuIndex;
+      console.log(index);
+      this.menu[this.category].splice(index, 1);
+      localStorage.setItem("menu", JSON.stringify(this.menu));
     }
-    this.updateCount();
+    this.updateMenu();
   }
 
   handleEdit(e) {
@@ -70,6 +73,7 @@ class App {
   }
 
   init() {
+    this.updateMenu();
     $("#espresso-menu-form").addEventListener("submit", (e) =>
       e.preventDefault()
     );
@@ -83,9 +87,8 @@ class App {
     });
     menuList.addEventListener("click", (e) => {
       if (e.target.classList.contains("menu-remove-button"))
-        this.handleDelete(e).bind(this);
-      if (e.target.classList.contains("menu-edit-button"))
-        this.handleEdit(e).bind(this);
+        this.handleDelete(e);
+      if (e.target.classList.contains("menu-edit-button")) this.handleEdit(e);
     });
   }
 }
