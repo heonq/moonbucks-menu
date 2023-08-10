@@ -14,7 +14,7 @@ class App {
       teavana: [],
       desert: [],
     };
-    this.category = espresso;
+    this.category = "espresso";
   }
 
   menuItemTemplate(menuName) {
@@ -41,6 +41,14 @@ class App {
     this.menu[this.category].push({ name: menuName });
     localStorage.setItem("menu", JSON.stringify(this.menu));
     menuInput.value = "";
+    this.updateMenu();
+  }
+
+  updateMenu() {
+    this.menu = JSON.parse(localStorage.getItem("menu"));
+    menuList.innerHTML = this.menu[this.category]
+      .map(({ name }) => this.menuItemTemplate(name))
+      .join("");
     this.updateCount();
   }
 
@@ -71,7 +79,7 @@ class App {
     );
     menuInput.addEventListener("keypress", (e) => {
       if (e.key !== "Enter") return;
-      this.handleInput().bind(this);
+      this.handleInput();
     });
     menuList.addEventListener("click", (e) => {
       if (e.target.classList.contains("menu-remove-button"))
