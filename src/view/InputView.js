@@ -9,15 +9,16 @@ export const InputView = {
     );
   },
   handleSubmit(model) {
-    $("#espresso-menu-submit-button").addEventListener(
-      "click",
-      model.handleInput
-    );
+    $("#espresso-menu-submit-button").addEventListener("click", () => {
+      model.handleInput();
+      OutputView.updateMenu();
+    });
   },
   handleKeypress(model) {
     menuInput.addEventListener("keypress", (e) => {
       if (e.key !== "Enter") return;
       model.handleInput();
+      OutputView.updateMenu();
     });
   },
   handleMenuButton(model) {
