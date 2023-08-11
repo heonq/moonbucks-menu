@@ -1,4 +1,4 @@
-import { $ } from "../../utils/index.js";
+import $ from "../../utils/index.js";
 const menuInput = $("#espresso-menu-name");
 
 export default class Menu {
@@ -56,7 +56,7 @@ export default class Menu {
   }
 
   getStorage() {
-    return localStorage.getItem("menu");
+    return JSON.parse(localStorage.getItem("menu"));
   }
 
   menuItemTemplate(menuName, index, soldOut) {
