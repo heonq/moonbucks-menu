@@ -39,6 +39,7 @@ export default class Menu {
   }
   handleSoldOut(e) {
     const index = e.target.closest("li").dataset.menuIndex;
+    console.log(index);
     this.menu[this.category][index].soldOut =
       !this.menu[this.category][index].soldOut;
     this.setStorage();

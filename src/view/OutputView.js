@@ -1,4 +1,4 @@
-import { $ } from "../../utils/index.js";
+import $ from "../../utils/index.js";
 const menuList = $("#espresso-menu-list");
 
 export const OutputView = {
@@ -6,11 +6,11 @@ export const OutputView = {
     const menuCount = menuList.querySelectorAll(".menu-list-item").length;
     $(".menu-count").innerText = `총 ${menuCount}개`;
   },
-  updateMenu(menu) {
-    menu.menu = menu.getStorage();
-    menuList.innerHTML = menu.menu[this.category]
+  updateMenu(menuModel) {
+    menuModel.menu = menuModel.getStorage();
+    menuList.innerHTML = menuModel.menu[menuModel.category]
       .map(({ name, soldOut }, index) =>
-        menu.menuItemTemplate(name, index, soldOut)
+        menuModel.menuItemTemplate(name, index, soldOut)
       )
       .join("");
     this.updateCount();
